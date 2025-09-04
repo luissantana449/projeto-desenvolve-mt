@@ -1,5 +1,5 @@
-import { SearchParams } from "../types";
 import { MissingPersonApiPaginatedResponse, MissingPersonApiResponse } from "../types/api";
+import { SearchParams } from "../types/domain";
 
 const API_BASE_URL = process.env.API_BASE_URL || "https://abitus-api.geia.vip";
 
