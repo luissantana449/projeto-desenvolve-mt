@@ -39,7 +39,8 @@ export function usePersons(params: UsePersonsParams = {}): UsePersonsReturn {
       age: person.idade || 0,
       gender: person.sexo,
       isAlive: person.vivo,
-      photoUrl: person.urlFoto ?? "/api/placeholder/300/400",
+      photoUrl:
+        person.urlFoto ?? "",
       lastSeenDate: person.ultimaOcorrencia?.dtDesaparecimento || "",
       lastSeenLocation:
         person.ultimaOcorrencia?.localDesaparecimentoConcat ||
