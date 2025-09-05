@@ -9,7 +9,6 @@ export interface MissingPerson {
   lastSeenLocation: string;
   disappearanceInfo: string | null;
   clothing: string | null;
-  caseNumber: string;
   occurrenceId: number;
   foundDate: string | null;
   foundAlive: boolean;
