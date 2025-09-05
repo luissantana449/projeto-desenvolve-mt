@@ -1,19 +1,20 @@
-import { MissingPerson } from "./domain"
+import { UsePersonsParams } from "@/src/hooks/usePersons";
+import { MissingPerson } from "./domain";
 
 export interface SafeImageProps {
-  src: string | undefined
-  alt: string
-  fill?: boolean
-  width?: number
-  height?: number
-  className?: string
-  containerClassName?: string
-  fallback?: React.ReactNode
-  priority?: boolean
-  sizes?: string
-  quality?: number
-  placeholder?: 'blur' | 'empty'
-  blurDataURL?: string
+  src: string | undefined;
+  alt: string;
+  fill?: boolean;
+  width?: number;
+  height?: number;
+  className?: string;
+  containerClassName?: string;
+  fallback?: React.ReactNode;
+  priority?: boolean;
+  sizes?: string;
+  quality?: number;
+  placeholder?: "blur" | "empty";
+  blurDataURL?: string;
 }
 
 export interface LoadingProps {
@@ -45,4 +46,33 @@ export interface EmptyStateProps {
 
 export interface PersonCardProps {
   person: MissingPerson;
+}
+
+export type ViewType = "grid" | "list";
+
+export interface ViewToggleProps {
+  currentView: ViewType;
+  onViewChange: (view: ViewType) => void;
+  className?: string;
+}
+
+export interface PersonListItemProps {
+  person: MissingPerson;
+}
+
+export interface PersonListContainerProps {
+  persons: MissingPerson[];
+  title: string;
+  count: number;
+}
+
+export interface MissingPersonsListProps {
+  searchFilters: UsePersonsParams;
+}
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  className?: string;
 }
