@@ -1,3 +1,5 @@
+import { MissingPerson } from "./domain"
+
 export interface SafeImageProps {
   src: string | undefined
   alt: string
@@ -39,4 +41,8 @@ export interface EmptyStateProps {
   };
   className?: string;
   size?: "sm" | "md" | "lg";
+}
+
+export interface PersonCardProps {
+  person: MissingPerson;
 }
