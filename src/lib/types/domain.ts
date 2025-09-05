@@ -35,3 +35,9 @@ export interface SearchParams {
   page?: number;
   limit?: number;
 }
+
+export interface Stats {
+  quantPessoasDesaparecidas: number;
+  quantPessoasEncontradas: number;
+  total: number;
+}

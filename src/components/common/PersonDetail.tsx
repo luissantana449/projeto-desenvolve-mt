@@ -297,7 +297,7 @@ export function PersonDetail({ id }: PersonDetailProps) {
               <section className="bg-white rounded-lg shadow-sm p-6">
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Link
-                    href={`/person/${person.id}/submit-tip`}
+                    href={`/person/${person.id}/submit-info`}
                     className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center space-x-2 flex-1 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                   >
                     <MessageCircle className="w-4 h-4" />

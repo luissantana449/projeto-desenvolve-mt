@@ -1,25 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-export interface SubmitInfoResult {
-  success: boolean;
-  message: string;
-  data?: any;
-  error?: string;
-}
-
-interface UseInfoMutationReturn {
-  submitTip: (formData: FormData) => Promise<SubmitInfoResult>;
-  isLoading: boolean;
-  error: any;
-  reset: () => void;
-}
+import { SubmitInfoResult, UseInfoMutationReturn } from "../lib/types/api";
 
 export function useInfoMutation(): UseInfoMutationReturn {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData): Promise<SubmitInfoResult> => {
-      const response = await fetch("/api/tips", {
+      const response = await fetch("/api/submit-info", {
         method: "POST",
         body: formData,
       });

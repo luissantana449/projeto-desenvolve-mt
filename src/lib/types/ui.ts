@@ -93,3 +93,9 @@ export interface SubmitInfoPageProps {
     id: string;
   }>;
 }
+
+export interface InfoFormProps {
+  personId: number;
+  personName?: string;
+  className?: string;
+}

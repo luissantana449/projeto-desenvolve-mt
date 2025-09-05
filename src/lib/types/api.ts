@@ -45,3 +45,17 @@ export interface MissingPersonApiResponse {
     ocoId: number;
   } | null;
 }
+
+export interface SubmitInfoResult {
+  success: boolean;
+  message: string;
+  data?: any;
+  error?: string;
+}
+
+export interface UseInfoMutationReturn {
+  submitTip: (formData: FormData) => Promise<SubmitInfoResult>;
+  isLoading: boolean;
+  error: any;
+  reset: () => void;
+}

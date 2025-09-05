@@ -1,18 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Upload, AlertCircle, CheckCircle, Send } from "lucide-react";
 import {
-  useInfoMutation,
-  type SubmitInfoResult,
-} from "@/src/hooks/useInfoMutation";
+  Upload,
+  AlertCircle,
+  CheckCircle,
+  Send,
+  X,
+  FileText,
+} from "lucide-react";
+import { useInfoMutation } from "@/src/hooks/useInfoMutation";
 import { cn } from "@/src/lib/utils";
-
-interface InfoFormProps {
-  personId: number;
-  personName?: string;
-  className?: string;
-}
+import { InfoFormProps } from "@/src/lib/types/ui";
+import { SubmitInfoResult } from "@/src/lib/types/api";
 
 function SubmitButton({ isLoading }: { isLoading: boolean }) {
   return (
@@ -53,10 +53,10 @@ export function InfoForm({ personId, personName, className }: InfoFormProps) {
   } = useInfoMutation();
   const [submissionResult, setSubmissionResult] =
     useState<SubmitInfoResult | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Handle form submission
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -71,6 +71,7 @@ export function InfoForm({ personId, personName, className }: InfoFormProps) {
         if (fileInputRef.current) {
           fileInputRef.current.value = "";
         }
+        setSelectedFiles([]);
       }
     } catch (err) {
       setSubmissionResult({
@@ -79,6 +80,33 @@ export function InfoForm({ personId, personName, className }: InfoFormProps) {
         error: err instanceof Error ? err.message : "Erro desconhecido",
       });
     }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      setSelectedFiles(Array.from(files));
+    }
+  };
+
+  // Remove a specific file
+  const removeFile = (index: number) => {
+    const newFiles = selectedFiles.filter((_, i) => i !== index);
+    setSelectedFiles(newFiles);
+
+    // Update the input element
+    if (fileInputRef.current && newFiles.length === 0) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  // Format file size
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
   // Reset state when component unmounts or resets
@@ -111,25 +139,23 @@ export function InfoForm({ personId, personName, className }: InfoFormProps) {
         </div>
       )}
 
-      {(submissionResult && !submissionResult.success) ||
-        (error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="text-red-800 font-medium">
-                {submissionResult?.message || "Erro ao enviar informação"}
+      {((submissionResult && !submissionResult.success) || error) && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="text-red-800 font-medium">
+              {submissionResult?.message || "Erro ao enviar informação"}
+            </p>
+            {(submissionResult?.error || error) && (
+              <p className="text-red-600 text-sm mt-1">
+                {submissionResult?.error || error?.message}
               </p>
-              {(submissionResult?.error || error) && (
-                <p className="text-red-600 text-sm mt-1">
-                  {submissionResult?.error || error?.message}
-                </p>
-              )}
-            </div>
+            )}
           </div>
-        ))}
+        </div>
+      )}
 
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-        {/* Hidden field for person ID - always required */}
         <input type="hidden" name="ocoId" value={personId} />
 
         {/* Information */}
@@ -190,6 +216,7 @@ export function InfoForm({ personId, personName, className }: InfoFormProps) {
               multiple
               accept="image/*,video/*,.pdf,.doc,.docx"
               className="hidden"
+              onChange={handleFileChange}
             />
             <label
               htmlFor="files"
@@ -206,9 +233,46 @@ export function InfoForm({ personId, personName, className }: InfoFormProps) {
               </div>
             </label>
           </div>
+
+          {/* Display Arquivos */}
+          {selectedFiles.length > 0 && (
+            <div className="mt-4 space-y-2">
+              <p className="text-sm font-medium text-gray-700">
+                Arquivos selecionados ({selectedFiles.length}):
+              </p>
+              <div className="space-y-2">
+                {selectedFiles.map((file, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-3 bg-gray-50 border border-gray-200 rounded-lg"
+                  >
+                    <div className="flex items-center gap-3">
+                      <FileText className="w-4 h-4 text-gray-500" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-900 truncate max-w-xs">
+                          {file.name}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {formatFileSize(file.size)}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => removeFile(index)}
+                      className="text-red-500 hover:text-red-700 transition-colors"
+                      aria-label={`Remover ${file.name}`}
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Privacy Notice */}
+        {/* Privacidade */}
         <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
           <p className="text-sm text-blue-800">
             <strong>Importante:</strong> Todas as informações enviadas são

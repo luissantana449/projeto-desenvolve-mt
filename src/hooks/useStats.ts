@@ -1,10 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { Stats } from "../lib/types/domain";
 
-interface Stats {
-  quantPessoasDesaparecidas: number;
-  quantPessoasEncontradas: number;
-  total: number;
-}
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "https://abitus-api.geia.vip";
 
 export interface UseStatsReturn {
   stats: Stats;
@@ -16,7 +14,7 @@ export interface UseStatsReturn {
 async function fetchStats(): Promise<Stats> {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/pessoas/aberto/estatistico`,
+      `${API_BASE_URL}/v1/pessoas/aberto/estatistico`,
       {
         headers: {
           Accept: "application/json",
