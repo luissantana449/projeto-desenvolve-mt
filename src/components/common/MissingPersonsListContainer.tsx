@@ -4,6 +4,7 @@ import { ViewToggle } from "@/src/components/ui/ViewToggle";
 import { PersonCard } from "@/src/components/common/PersonCard";
 import { PersonListItem } from "@/src/components/common/PersonListItem";
 import { useViewType } from "@/src/hooks/useViewType";
+import { MissingPerson } from "@/src/lib/types/domain";
 import { PersonListContainerProps } from "@/src/lib/types/ui";
 
 export function MissingPersonsListContainer({

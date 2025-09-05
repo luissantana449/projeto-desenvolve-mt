@@ -76,3 +76,14 @@ export interface PaginationProps {
   onPageChange: (page: number) => void;
   className?: string;
 }
+
+export interface UsePersonReturn {
+  person: MissingPerson | null;
+  isLoading: boolean;
+  error: any;
+  refetch: () => void;
+}
+
+export interface PersonDetailProps {
+  id: string;
+}
