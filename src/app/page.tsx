@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Phone } from "lucide-react";
 import type { UsePersonsParams } from "@/src/hooks/usePersons";
 import { SearchBar } from "@/src/components/common/SearchBar";
+import { MissingPersonsList } from "../components/common/MissingPersonsList";
 
 export default function HomePage() {
   const [searchFilters, setSearchFilters] = useState<UsePersonsParams>({
@@ -41,6 +42,7 @@ export default function HomePage() {
       <div className="container py-8">
         <div className="max-w-6xl mx-auto">
           {/* Estatísticas */}
+          
 
           {/* Contato de Emergnência */}
           <div className="bg-red-700 border border-red-600 rounded-lg p-4 mb-8 shadow-md">
@@ -65,6 +67,7 @@ export default function HomePage() {
           </div>
 
           {/* Resultados */}
+          <MissingPersonsList searchFilters={searchFilters} />
         </div>
       </div>
     </div>

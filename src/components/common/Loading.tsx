@@ -94,3 +94,17 @@ export function PersonDetailSkeleton() {
     </div>
   );
 }
+
+export function StatsSkeleton() {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <div key={index} className="bg-white rounded-lg border p-6 space-y-3">
+            <div className="h-8 bg-gray-200 rounded animate-pulse w-1/2" />
+            <div className="h-12 bg-gray-200 rounded animate-pulse w-3/4" />
+            <div className="h-4 bg-gray-200 rounded animate-pulse w-full" />
+          </div>
+        ))}
+      </div>
+    )
+  }
