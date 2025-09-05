@@ -15,6 +15,7 @@ export interface SafeImageProps {
   quality?: number;
   placeholder?: "blur" | "empty";
   blurDataURL?: string;
+  lazy?: boolean;
 }
 
 export interface LoadingProps {

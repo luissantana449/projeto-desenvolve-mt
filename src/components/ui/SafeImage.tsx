@@ -18,6 +18,7 @@ export function SafeImage({
   quality = 75,
   placeholder = "empty",
   blurDataURL,
+  lazy = true,
 }: SafeImageProps) {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -59,6 +60,7 @@ export function SafeImage({
           quality={quality}
           placeholder={placeholder}
           blurDataURL={blurDataURL}
+          loading={lazy && !priority ? "lazy" : "eager"}
           onLoad={() => setLoading(false)}
           onError={() => {
             setError(true);
@@ -84,6 +86,7 @@ export function SafeImage({
           loading ? "opacity-0" : "opacity-100",
           className
         )}
+        loading={lazy && !priority ? "lazy" : "eager"}
         onLoad={() => setLoading(false)}
         onError={() => {
           setError(true);
