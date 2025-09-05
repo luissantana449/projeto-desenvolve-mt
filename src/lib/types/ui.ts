@@ -87,3 +87,9 @@ export interface UsePersonReturn {
 export interface PersonDetailProps {
   id: string;
 }
+
+export interface SubmitInfoPageProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
